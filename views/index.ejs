@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Notes</title>
+    <link rel="icon" type="image/png" href="assets/images/decoration.png" sizes="96x96" />
+    <link rel="stylesheet" href="styles/main.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="menu-bar">
+            <a href="/" class="menu-item">HOME</a>
+            <a target="/about_blank" href="https://www.linkedin.com/in/blaine-silva-0ab04a178" class="menu-item">CONTACT</a>
+        </div>
+        <div class="presentation">
+            <h1 class="title">NOTE YOUR READING IMPRESSIONS</h1>
+            <p class="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo, exercitationem, quis numquam voluptas doloribus officiis quod temporibus tenetur tempore accusamus similique ea delectus!</p>
+            <div class="buttons">
+                <a href="#notes-container" class="btn-rb">Read below</a>
+                <button href="/new" data-modal-target="#modal" class="btn-cn">Create note</button>
+            </div>
+        </div>
+        <div class="decoration">
+            <img src="assets/images/decoration.png" alt="black-decoration" height="200" class=""/>
+        </div>
+        <div class="woman-reading">
+            <img src="assets/images/womanreading.png" alt="woman-reading" height="500" class=""/>
+        </div>
+    </div>
+    <div class="sorter">
+        <h3>SORT NOTES BY:</h3>
+        <div class="sort-types">
+            <% for(let sort of listSorting){%>
+                <form  action="/sort" method="post">                          
+                    <input hidden="true" name="sortId" value="<%=sort.id%>"/>
+                    <button id="<%=sort.id%>" type="submit" class="sort-type"><%=sort.name%></button>                             
+                </form>
+            <% } %> 
+        </div>      
+    </div>
+    <div class="book-searcher">
+        <h3>SEARCH A BOOK NOTE:</h3>
+        <form style="width: 50%;height: 5vh;border:1px solid #000;padding:5px 20px;border-radius:20px;display:grid;grid-template-columns: 95% 5%" action="/searcher" method="post">                          
+            <input name="searcher" placeholder="Type a book name...">
+            <button type="submit" style="background-color: transparent; border: none;cursor: pointer;">
+                <img src="assets/icons/search.png" height=20/>
+            </button>            
+        </form>
+    </div>
+    <div id="notes-container" class="notes-container">    
+        <% for(let note of listNotes){%>                 
+            <div class="note">               
+                <div style="display: flex;justify-content: center;flex-direction:column; align-items: center;gap:10px">
+                    <img src="<%= note.coverLink %>" alt="book-cover" class=""/>
+                    <a target="/about_blank" id="amazonUrl<%=note.id%>" href="<%= note.amazonUrl %>">Amazon Link</a>
+                    <button id="cancel<%=note.id%>" onclick="handler2('<%=note.id%>')" class="btn-rb" hidden="true">
+                        Cancel
+                    </button>
+                    
+                </div>
+                <div style="padding:20px;display:flex;flex-direction:column;justify-content: space-between;">
+                    <div> 
+                        <div>                           
+                            <p style="font-size:1.2rem;font-weight:bold;margin-bottom: 0;overflow-y:auto;scrollbar-width: thin;max-height: 90px"><%= note.bookName %></p>
+                            <p style="font-style: italic;font-size:1.1rem;margin-top: 2px;"><%= note.author %></p>                           
+                        </div>
+                        
+                        <div id="currentData<%=note.id%>">
+                            <div style="display:flex; gap:20px;height: 5vh;align-items: center;" >
+                                <div>
+                                    <% for(var k = 1; k<=note.rating; k++) {%>
+                                        <span id="star<%=k%><%=note.id%>" class="fa fa-star checked"></span>                     
+                                    <% } %>
+                                    <% for(var l = note.rating+1; l<=10; l++) { %>
+                                        <span id="star<%=l%><%=note.id%>" class="fa fa-star"></span>
+                                    <% } %>                                   
+                                </div>
+                                <div>
+                                    <p id="currentRating<%=note.id%>" style="font-weight: bold;"><%= note.rating %>/10</p>
+                                </div>
+                            </div>                                                                                                                  
+                            <p id="currentReview<%=note.id%>" style="font-size:1rem;overflow-y:auto;scrollbar-width: thin;max-height: 130px"><%= note.review %></p>
+                        </div> 
+                        <div id="editingData<%=note.id%>" hidden="true">
+                            <form action="/edit" method="post">
+                                <input hidden="true" name="noteId" value="<%=note.id%>"/>
+                                <p style="font-size: 1rem;margin-bottom: 10px;margin-top: 0;">Edit rating:</p>
+                                <% for(var m = 1; m<=note.rating; m++) {%>
+                                    <span id="starEdit<%=m%><%=note.id%>" onclick="edit('<%=m%>','<%=note.id%>')" class="fa fa-star checked"></span>                     
+                                <% } %>
+                                <% for(var n = note.rating+1; n<=10; n++) { %>
+                                    <span id="starEdit<%=n%><%=note.id%>" onclick="edit('<%=n%>','<%=note.id%>')" class="fa fa-star"></span>
+                                <% } %>
+                                <input id="rating<%=note.id%>" hidden="true" name="updatedNoteRating" value="<%=note.rating%>"/>
+                                <p style="font-size: 1rem;margin-bottom: 10px;margin-top:2px">Edit review:</p>
+                                <textarea style="font-family:'Gill Sans',sans-serif;width:90%;height: 15vh;border:1px solid #000;padding:5px 20px;border-radius:20px;padding:10px" id="review<%=note.id%>" name="updatedNoteReview" value="<%= note.review %>" ><%= note.review %></textarea>                                             
+                                <button id="done<%=note.id%>" class="btn-cn" type="submit">
+                                    Done
+                                </button>
+                                
+                            </form>
+                            
+                        </div>
+                        
+                    </div>
+                    <div style="display: flex; gap: 10px; ">
+                        <button id="delete<%=note.id%>" onclick="passingId('<%=note.id%>')" data-modal-target="#modal-sure" class="btn-rb">Delete</button>
+                        <button id="edit<%=note.id%>" onclick="handler('<%=note.id%>')" class="btn-rb">Edit</button>
+                        <button id="notes<%=note.id%>" onclick="passingData('<%=note.id%>','<%=note.bookName%>')" data-modal-target="#modal-notes" class="btn-cn">Notes</button>
+                    </div>                
+                </div>              
+            </div>           
+        <% } %>
+        <div>
+            <h2 id="error"> <%= errorMessage %></h2>
+            <a id="back" href="/" class="btn-cn">Back</a>
+        </div>
+        
+    </div>
+    <div id="currentActiveSort" style="display:none"><%= sortId %></div>
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <div class="modal-title">New Note</div>
+        </div>
+        <div class="modal-body">
+            
+                <div style="display:flex;gap:10px;justify-content: center;align-items: center;" >
+                    <h3>ENTER BOOK OR ISBN</h3>
+                    <div style="width: 500px;height: 5vh;border:1px solid #000;padding:5px 15px;border-radius:20px;display:flex;align-items: center;">
+                        <input type="text" name="search" id="searchInput" autocomplete="off" placeholder="Type here">
+                    </div>
+                </div>
+                            
+                <div style="justify-content:center;position:absolute; z-index:10;width: 400px;background-color: #fff; max-height: 300px;overflow-y:auto;scrollbar-width: thin;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;">
+                    <ul id="dropdownList"></ul>
+                </div>
+            <form action="/new" method="POST" style="background-color: #fff;height: 350px;width:80%;border-radius: 20px;padding: 20px;margin-top: 10px;" >
+                <div style="display: flex;align-items: center;gap:10px">
+                    <h5>Book title:</h5>
+                    <input id="inputTitle" type="text" hidden="true" name="newBookTitle" value=""/>
+                    <p id="newBookTitle"></p>
+                </div>
+                <div style="display: flex;align-items: center;gap:10px">
+                    <h5>Author:</h5>
+                    <input id="inputAuthor" type="text" hidden="true" name="newBookAuthor" value=""/>
+                    <p id="newBookAuthor"></p>
+                </div>
+                <div style="display: flex;align-items: center;gap:10px">
+                    <h5>Rating:</h5>                   
+                    <% for(var j = 1; j<=10; j++) {%>
+                        <span id="starNew<%=j%>" onclick="newBookRate('<%=j%>')" class="fa fa-star"></span>                     
+                    <% } %>
+                    <input id="newBookRating" hidden="true" name="newBookRating" value=""/>
+                </div>
+                <div style="display: flex;gap:10px">
+                    <h5>Opinion:</h5>
+                    <div style="width: 90%;height: 20vh;border:1px solid #000;padding:5px 20px;border-radius:20px;">
+                        <textarea style="border:none;font-size:1rem; font-family:'Gill Sans',sans-serif;padding-top:10px;width:95%; height: 17vh" type="text" name="newBookReview" placeholder="Your review about this book"></textarea>
+                    </div>
+                </div>
+                <input id="newBookCoverId" type="text" hidden="true" name="newBookCoverId"/>
+                <button class="btn-cn" type="submit">Save</button>
+            </form>       
+        </div>
+    </div>
+    <div class="modal-sure" id="modal-sure">        
+        <h3 style="text-align: center;">ARE YOU SURE YOU WANT TO DELETE THIS NOTE?</h3>
+        <div style="display: flex;gap:20px">
+            <button class="btn-cn" id="cancel-btn">No</button>
+            <form action="/delete" method="post">
+                <input id="deletingNote" hidden="true" name="deleteId" value=""/>
+                <button id="delete" href="" type="submit" class="btn-rb">Yes</button>
+            </form>
+        </div>             
+    </div>
+    <div style="align-content: center;" class="modal" id="modal-notes">
+        <div class="modal-body">
+            <div style="background-color: #fff;border-radius: 20px;width: 90%;height: 80vh;" class="modal-body">
+                <h3 id="bookNameNotes"></h3>
+                <p>Coming soon...</p>
+                <input id="bookIdNotes" hidden="true" name="bookIdNotes" value=""/>
+            </div>
+        </div>
+        
+    </div>
+    <div id="overlay"></div>
+    <footer style="display:flex;justify-content: center; margin:30px 0">
+        Blaine Silva @ 2025
+    </footer>
+    <script type="text/javascript" src="/script.js" ></script>
+</body>
+<script>
+    
+</script>
+</html>

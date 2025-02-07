@@ -1,0 +1,328 @@
+body {
+    margin: 0;
+    background-color: #fff;
+    
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+h3 {
+    margin:0
+}
+
+input {
+    background-color:transparent;width:100%;border:none;font-size: 1rem;
+}
+
+input:focus{
+    outline: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+.active {
+    font-weight: bold ;
+    transition: 0.7;
+}
+
+.book-searcher {
+    margin-top: 50px;
+    background-image: linear-gradient(300deg, #fff, #bd9af1, #96b9fc);
+    background-size: 180% 180%;
+    animation: gradient-animation 5s ease infinite;
+    justify-self: center;
+    width: 70%;
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    gap:30px
+}
+
+.btn-rb {
+    padding:10px 20px;
+    border-radius: 50px;
+    background-color: transparent;
+    border: 2px solid #000;
+    font-size: 1rem;
+    cursor: pointer;
+    transition:0.9s;
+    text-decoration: none;
+    color:#000
+}
+
+.btn-cn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #000;
+    border: 2px solid #000;
+    color:white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.9s;
+    text-decoration: none;
+}
+
+.btn-rb:hover {
+    transition: 0.9s;
+    font-size: 1.5rem;
+}
+
+.btn-cn:hover {
+    transition: 0.9s;
+    font-size: 1.5rem
+}
+
+.buttons {
+    display: flex;
+    gap:10px;
+    margin-top: 40px;
+    margin-right: 100px; 
+}
+
+.checked {
+    color: orange;
+  }
+
+.decoration {
+    position: absolute;
+    z-index:5;
+    margin-right: 280px;
+    margin-top:180px;
+    
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-bar {
+    width: 40%;
+    height: 40px;
+    background-color: #000;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    display: flex;
+    gap:40px;
+    justify-content: center;
+    align-items: center;
+    transition: 0.7s;
+}
+
+.menu-bar:hover{
+    height: 50px;
+    transition: 0.7s;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: 3px;
+    font-size:0.8rem;
+    transition: 0.7s;
+}
+
+.menu-item:hover {
+    transition: 0.7s;
+    font-size: 1rem;
+}
+
+.note {
+    width: 95%;
+    height: 400px;
+    background-color: #fff;
+    border-radius: 30px;
+    opacity: 0.8;
+    display: grid;
+    grid-template-columns: 40% 60%
+}
+
+.notes-container {
+    justify-self: center;
+    width: 90%;
+    min-height: 60vh;
+    background-image: linear-gradient(300deg, #fff, #bd9af1, #96b9fc);
+    background-size: 180% 180%;
+    animation: gradient-animation 5s ease infinite;
+    border-radius: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: grid;
+    gap:40px;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+    padding:40px
+}
+
+.presentation {
+    background-image: linear-gradient(300deg, #fff, #bd9af1, #96b9fc);
+    background-size: 180% 180%;
+    animation: gradient-animation 5s ease infinite;
+    margin-top: 40px;
+    height: 55vh;
+    width: 85%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding-right:70px
+}
+
+.sort-type {
+    font-size: 0.9rem;
+    transition: 0.8s;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.sort-type:hover {
+    font-size: 1.3rem;
+    transition: 0.8s;
+}
+
+.sort-types {
+    display: flex;
+    border: 1px solid #000;
+    border-radius: 60px;
+    padding: 15px 25px;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.sorter {
+    width: 40%;
+    margin-top: 50px;
+    height: 20vh;
+    background-image: linear-gradient(300deg, #fff, #bd9af1, #96b9fc);
+    background-size: 180% 180%;
+    animation: gradient-animation 5s ease infinite;
+    border-radius: 30px;
+    justify-self: end;
+    margin-right: 100px;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.text {
+    font-size: 0.8rem;
+    width: 400px;
+    margin-top: 40px;
+    text-align: end;
+}
+
+.title {
+    font-size: 2.5rem;
+    line-height: 60px;
+    text-align: end;
+    margin-top: 30px;
+}
+
+.woman-reading {
+    position: absolute;
+    height: 30vh;
+    z-index: 10;
+    margin-right: 700px;
+    margin-bottom: 100px;
+}
+
+#overlay {
+    position:fixed;
+    opacity:0;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: none;
+    transition: 200ms ease-in-out;
+}
+
+#overlay.active {
+    pointer-events: all;
+    opacity:1;
+}
+  
+.modal {
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    background-image: linear-gradient(300deg, #fff, #bd9af1, #96b9fc);
+    background-size: 180% 180%;
+    animation: gradient-animation 5s ease infinite;
+    width: 60%;
+    height: 90vh;
+    border-radius: 20px;
+    z-index:10;
+    font-family: "Roboto", sans-serif;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.modal-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    margin:0;
+    font-weight: 700;
+    font-size: 2rem;
+    transition: 1s;
+}
+
+.modal-sure {
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    background-image: linear-gradient(300deg, #fff, #bd9af1, #96b9fc);
+    background-size: 180% 180%;
+    animation: gradient-animation 5s ease infinite;
+    width: 30%;
+    height: 30vh;
+    border-radius: 20px;
+    z-index:10;
+    font-family: "Roboto", sans-serif;
+    display: flex;flex-direction: column;justify-content: center;align-items: center;
+}
+
+.modal-sure.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+@keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+}
